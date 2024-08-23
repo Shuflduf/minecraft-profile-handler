@@ -2,6 +2,8 @@ extends Window
 
 
 func _on_new_pack_pressed() -> void:
+	if Global.minecraft_dir.is_empty():
+		return
 	show()
 	%Name.text = ""
 

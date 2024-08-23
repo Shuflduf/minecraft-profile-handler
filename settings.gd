@@ -16,12 +16,17 @@ func _on_find_dir_pressed() -> void:
 
 func _on_file_dialog_dir_selected(dir: String) -> void:
 	dir = dir.replace('\\', "/")
-	print(dir)
-	Global.minecraft_dir = dir
 	var valid = DirAccess.dir_exists_absolute(dir + "/mods")
+	if !valid:
+		return
+	Global.minecraft_dir = dir
 	$VBoxContainer/MinecraftDir/Label.text = "Valid" if valid else "Invalid"
 	FileAccess.open("user://path.txt", FileAccess.WRITE).store_line(dir)
-
+	get_parent().update_profiles()
 
 func _on_close_requested() -> void:
 	hide()
+
+
+func _on_settings_pressed() -> void:
+	show()

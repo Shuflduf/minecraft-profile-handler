@@ -87,10 +87,6 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer/Mods"]
-layout_mode = 2
-text = "aaaaaaaaaaaaaaa"
-
 [node name="NewPackDialog" type="Window" parent="."]
 title = "New Pack"
 initial_position = 1
@@ -177,7 +173,7 @@ use_native_dialog = true
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/NewPack" to="NewPackDialog" method="_on_new_pack_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/LoadPack" to="." method="_on_load_pack_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/ViewCurrent" to="." method="_on_view_current_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/Settings" to="." method="_on_view_current_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/Settings" to="Settings" method="_on_settings_pressed"]
 [connection signal="close_requested" from="NewPackDialog" to="NewPackDialog" method="_on_close_requested"]
 [connection signal="pressed" from="NewPackDialog/VBoxContainer/Buttons/Confirm" to="NewPackDialog" method="_on_confirm_pressed"]
 [connection signal="pressed" from="NewPackDialog/VBoxContainer/Buttons/Cancel" to="NewPackDialog" method="_on_cancel_pressed"]

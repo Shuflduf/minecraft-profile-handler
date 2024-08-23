@@ -6,20 +6,9 @@ extends Control
 var current_profile: Profile
 
 func _ready() -> void:
-	for i in DirAccess.get_directories_at(Global.minecraft_dir):
-		if !i.begins_with("PROFILE "):
-			continue
-
-		var new_button = profile_scene.instantiate()
-		new_button.name = i.lstrip("PROFILE ")
-		new_button.text = new_button.name
-		%Profiles.add_child(new_button)
-		connect_profile(new_button)
-
-	if %Profiles.get_child_count():
-		current_profile = %Profiles.get_child(0)
-		%Profiles.get_child(0).selected = true
-	_on_view_current_pressed()
+	if Global.minecraft_dir.is_empty():
+		return
+	update_profiles()
 
 
 func add_profile(new_name: String):
@@ -29,6 +18,28 @@ func add_profile(new_name: String):
 	%Profiles.add_child(new_button)
 	connect_profile(new_button)
 
+
+func update_profiles():
+
+	for i in %Profiles.get_children():
+		i.free()
+
+	for i in DirAccess.get_directories_at(Global.minecraft_dir):
+		if !i.begins_with("PROFILE "):
+			continue
+
+		var new_button = profile_scene.instantiate()
+		new_button.name = i.lstrip("PROFILE ")
+		new_button.text = new_button.name
+		new_button.set_deferred("selected", false)
+		%Profiles.add_child(new_button)
+		connect_profile(new_button)
+
+	if %Profiles.get_child_count():
+		print("HGDKNM")
+		current_profile = %Profiles.get_child(0)
+		%Profiles.get_child(0).set_deferred("selected", true)
+	_on_view_current_pressed()
 
 
 func connect_profile(prof: Profile):
@@ -53,6 +64,9 @@ func view_mods(path: String):
 
 
 func _on_load_pack_pressed() -> void:
+	if Global.minecraft_dir.is_empty():
+		return
+
 	for i in DirAccess.get_files_at(Global.minecraft_dir + "/mods"):
 		DirAccess.remove_absolute(Global.minecraft_dir + "/mods/" + i)
 
@@ -62,6 +76,9 @@ func _on_load_pack_pressed() -> void:
 
 
 func _on_view_current_pressed() -> void:
+	if Global.minecraft_dir.is_empty():
+		return
+
 	for i in %Mods.get_children():
 		i.queue_free()
 
