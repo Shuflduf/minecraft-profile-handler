@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://c0drd5npyrnoi"]
 
-[ext_resource type="Script" path="res://profile_button.gd" id="1_5a1eg"]
-[ext_resource type="Script" path="res://add_mods.gd" id="2_fjf2d"]
+[ext_resource type="Script" path="res://scripts/profile_button.gd" id="1_5a1eg"]
+[ext_resource type="Script" path="res://scripts/add_mods.gd" id="2_fjf2d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfn4f"]
 bg_color = Color(0.201527, 0.201527, 0.201526, 1)

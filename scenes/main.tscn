@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://ogdojg6qm65c"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_qbov0"]
-[ext_resource type="Script" path="res://new_pack_dialog.gd" id="2_3vvqh"]
-[ext_resource type="PackedScene" uid="uid://c0drd5npyrnoi" path="res://profile_button.tscn" id="2_t7p04"]
-[ext_resource type="Script" path="res://settings.gd" id="4_8gqfh"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_qbov0"]
+[ext_resource type="Script" path="res://scripts/new_pack_dialog.gd" id="2_3vvqh"]
+[ext_resource type="PackedScene" uid="uid://c0drd5npyrnoi" path="res://scenes/profile_button.tscn" id="2_t7p04"]
+[ext_resource type="Script" path="res://scripts/settings.gd" id="4_8gqfh"]
 
 [sub_resource type="Shader" id="Shader_lv28n"]
 code = "shader_type canvas_item;
