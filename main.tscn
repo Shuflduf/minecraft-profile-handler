@@ -1,9 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://ogdojg6qm65c"]
+[gd_scene load_steps=7 format=3 uid="uid://ogdojg6qm65c"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_qbov0"]
 [ext_resource type="Script" path="res://new_pack_dialog.gd" id="2_3vvqh"]
 [ext_resource type="PackedScene" uid="uid://c0drd5npyrnoi" path="res://profile_button.tscn" id="2_t7p04"]
 [ext_resource type="Script" path="res://settings.gd" id="4_8gqfh"]
+[ext_resource type="Shader" path="res://wave_full.gdshader" id="5_it2wd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b8iah"]
+shader = ExtResource("5_it2wd")
+shader_parameter/color_gap = Color(0.16, 0.11776, 0.0544, 1)
+shader_parameter/color_stripe = Color(0.23, 0.185533, 0.138, 1)
+shader_parameter/divisions = 16.0
+shader_parameter/stripe_bias = 2.0
+shader_parameter/speed = 0.03
+shader_parameter/angle = 0.7854
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -31,60 +41,70 @@ theme_override_constants/margin_bottom = 50
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="ButtonContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="NewPack" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="NewPack" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "New Pack"
 
-[node name="LoadPack" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="LoadPack" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "Load Current Pack"
 
-[node name="ViewCurrent" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="ViewCurrent" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "View Current Mods"
 
-[node name="Settings" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="CurrentViewLabel" type="Label" parent="MarginContainer/HBoxContainer/ButtonContainer"]
+layout_mode = 2
+text = "Currently Viewing:"
+
+[node name="CurrentView" type="RichTextLabel" parent="MarginContainer/HBoxContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "[b]mods[/b]"
+fit_content = true
+
+[node name="Settings" type="Button" parent="MarginContainer/HBoxContainer/ButtonContainer"]
 layout_mode = 2
 size_flags_vertical = 10
+focus_mode = 0
 theme_override_font_sizes/font_size = 20
 text = "Settings"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer"]
+[node name="ProfileContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer"]
 clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Profiles" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ScrollContainer"]
+[node name="Profiles" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ProfileContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 25
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="ModContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer"]
 clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="Mods" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer"]
+[node name="Mods" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ModContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="NewPackDialog" type="Window" parent="."]
@@ -136,7 +156,8 @@ text = "Cancel"
 [node name="Settings" type="Window" parent="."]
 title = "Settings"
 initial_position = 1
-size = Vector2i(390, 110)
+size = Vector2i(320, 30)
+visible = false
 unresizable = true
 script = ExtResource("4_8gqfh")
 
@@ -170,10 +191,31 @@ access = 2
 show_hidden_files = true
 use_native_dialog = true
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/NewPack" to="NewPackDialog" method="_on_new_pack_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/LoadPack" to="." method="_on_load_pack_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/ViewCurrent" to="." method="_on_view_current_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/Settings" to="Settings" method="_on_settings_pressed"]
+[node name="Stripes" type="Panel" parent="."]
+z_index = -100
+material = SubResource("ShaderMaterial_b8iah")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel2" type="Panel" parent="."]
+z_index = -100
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/NewPack" to="NewPackDialog" method="_on_new_pack_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/LoadPack" to="." method="_on_load_pack_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/ViewCurrent" to="." method="_on_view_current_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/ButtonContainer/Settings" to="Settings" method="_on_settings_pressed"]
 [connection signal="close_requested" from="NewPackDialog" to="NewPackDialog" method="_on_close_requested"]
 [connection signal="pressed" from="NewPackDialog/VBoxContainer/Buttons/Confirm" to="NewPackDialog" method="_on_confirm_pressed"]
 [connection signal="pressed" from="NewPackDialog/VBoxContainer/Buttons/Cancel" to="NewPackDialog" method="_on_cancel_pressed"]

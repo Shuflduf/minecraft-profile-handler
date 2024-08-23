@@ -35,6 +35,9 @@ func _on_right_click_index_pressed(index: int) -> void:
 		1:
 			$ChangeName.show()
 			$ChangeName/NewName.text = name
+		2:
+			OS.move_to_trash(get_mods_path())
+			queue_free()
 
 func get_mods_path() -> String:
 	return Global.minecraft_dir + "/PROFILE " + text

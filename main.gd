@@ -17,6 +17,8 @@ func add_profile(new_name: String):
 	new_button.text = new_button.name
 	%Profiles.add_child(new_button)
 	connect_profile(new_button)
+	#new_button.set_deferred("selected", true)
+	new_button.pressed.emit()
 
 
 func update_profiles():
@@ -43,8 +45,8 @@ func update_profiles():
 
 
 func connect_profile(prof: Profile):
-
 	prof.pressed.connect(func():
+		%CurrentView.text = prof.text
 		for i in %Profiles.get_children():
 			i.selected = false
 		prof.selected = true
@@ -64,7 +66,7 @@ func view_mods(path: String):
 
 
 func _on_load_pack_pressed() -> void:
-	if Global.minecraft_dir.is_empty():
+	if Global.minecraft_dir.is_empty() or !%Profiles.get_child_count():
 		return
 
 	for i in DirAccess.get_files_at(Global.minecraft_dir + "/mods"):
@@ -78,6 +80,8 @@ func _on_load_pack_pressed() -> void:
 func _on_view_current_pressed() -> void:
 	if Global.minecraft_dir.is_empty():
 		return
+
+	%CurrentView.text = "[b]mods[/b]"
 
 	for i in %Mods.get_children():
 		i.queue_free()
