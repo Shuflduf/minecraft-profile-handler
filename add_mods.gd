@@ -27,17 +27,18 @@ func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
 
 func _on_link_button_pressed() -> void:
 	var url: String = %LinkLineEdit.text
+	%LinkLineEdit.text = ""
 	if url.is_empty():
 		%LinkStatus.text = "Empty URL"
 		return
-	#elif !url.is_valid_filename():
-		#%LinkStatus.text = "Invalid URL"
-		#return
 	%LinkStatus.text = "Downloading..."
-	%HTTPRequest.request(%LinkLineEdit.text)
+	%HTTPRequest.request(url)
 	%HTTPRequest.download_file = get_parent().get_mods_path().strip_edges() + "/" + url.get_file()
 
 
-func _on_http_request_request_completed(_r, _r_code, _h, _b) -> void:
-	get_parent().pressed.emit.call_deferred()
-	%LinkStatus.text = "Download Finished"
+func _on_http_request_request_completed(_r, r_code, _h, _b) -> void:
+	if r_code == 200:
+		get_parent().pressed.emit()
+		%LinkStatus.text = "Download Finished"
+	else:
+		%LinkStatus.text = "Error: " + str(r_code)

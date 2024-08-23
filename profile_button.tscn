@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0drd5npyrnoi"]
+[gd_scene load_steps=6 format=3 uid="uid://c0drd5npyrnoi"]
 
 [ext_resource type="Script" path="res://profile_button.gd" id="1_5a1eg"]
 [ext_resource type="Script" path="res://add_mods.gd" id="2_fjf2d"]
@@ -9,6 +9,36 @@ expand_margin_left = 5.0
 expand_margin_top = 5.0
 expand_margin_right = 5.0
 expand_margin_bottom = 5.0
+
+[sub_resource type="Shader" id="Shader_lv28n"]
+code = "shader_type canvas_item;
+
+uniform vec4 color_gap: source_color = vec4(0.25);
+uniform vec4 color_stripe: source_color = vec4(1.0, 0.75, 0.0, 1.0);
+uniform float divisions = 16.0; // increase for more stripe density
+uniform float stripe_bias = 2.0; // 1.0 means no stripes; 2.0 means stripes and gaps are equal size
+uniform float speed = 0.03;
+uniform float angle = 0.7854; // in radians
+
+
+void fragment() {
+    float w = cos(angle) * UV.x + sin(angle) * UV.y - speed * TIME;
+    if (floor(mod(w * divisions, stripe_bias)) < 0.0001) {
+        COLOR = color_gap;
+    } else {
+        COLOR = color_stripe;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ko7ml"]
+resource_local_to_scene = true
+shader = SubResource("Shader_lv28n")
+shader_parameter/color_gap = Color(0.16, 0.11776, 0.0544, 1)
+shader_parameter/color_stripe = Color(0.23, 0.185533, 0.138, 1)
+shader_parameter/divisions = 2.81
+shader_parameter/stripe_bias = 2.0
+shader_parameter/speed = 0.06
+shader_parameter/angle = 0.195
 
 [node name="Panel" type="PanelContainer"]
 anchors_preset = 15
@@ -52,6 +82,25 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_to_text_length = true
 
+[node name="Stripes" type="Panel" parent="ChangeName"]
+z_index = -100
+material = SubResource("ShaderMaterial_ko7ml")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Darken" type="Panel" parent="ChangeName"]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="AddMods" type="Window" parent="."]
 title = "Add Mods"
 initial_position = 1
@@ -67,11 +116,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 2
+current_tab = 0
 tab_focus_mode = 0
 
 [node name="Drop" type="Control" parent="AddMods/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -107,12 +155,14 @@ text = "Select Files"
 
 [node name="FileDialog" type="FileDialog" parent="AddMods/TabContainer/Select"]
 title = "Open File(s)"
+size = Vector2i(324, 180)
 ok_button_text = "Open"
 file_mode = 1
 access = 2
 use_native_dialog = true
 
 [node name="Link" type="Control" parent="AddMods/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -129,6 +179,7 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 1
 placeholder_text = "Link Here"
 alignment = 1
 expand_to_text_length = true
@@ -136,6 +187,7 @@ expand_to_text_length = true
 [node name="LinkButton" type="Button" parent="AddMods/TabContainer/Link/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+focus_mode = 0
 text = "Download"
 
 [node name="LinkStatus" type="Label" parent="AddMods/TabContainer/Link/VBoxContainer"]
@@ -147,6 +199,25 @@ horizontal_alignment = 1
 [node name="HTTPRequest" type="HTTPRequest" parent="AddMods/TabContainer/Link"]
 unique_name_in_owner = true
 use_threads = true
+
+[node name="Stripes" type="Panel" parent="AddMods"]
+z_index = -100
+material = SubResource("ShaderMaterial_ko7ml")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Darken" type="Panel" parent="AddMods"]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="index_pressed" from="RightClick" to="." method="_on_right_click_index_pressed"]
