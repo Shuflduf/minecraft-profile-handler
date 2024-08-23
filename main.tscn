@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3 uid="uid://ogdojg6qm65c"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_qbov0"]
+[ext_resource type="Script" path="res://new_pack_dialog.gd" id="2_3vvqh"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qbov0")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 25
+
+[node name="NewPack" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "New Pack"
+
+[node name="Profiles" type="ScrollContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Profiles" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/Profiles"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="NewPackDialog" type="Window" parent="."]
+title = "New Pack"
+initial_position = 1
+size = Vector2i(295, 100)
+visible = false
+script = ExtResource("2_3vvqh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NewPackDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Name" type="HBoxContainer" parent="NewPackDialog/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="NewPackDialog/VBoxContainer/Name"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Name"
+
+[node name="Name" type="LineEdit" parent="NewPackDialog/VBoxContainer/Name"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+expand_to_text_length = true
+
+[node name="Buttons" type="HBoxContainer" parent="NewPackDialog/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Confirm" type="Button" parent="NewPackDialog/VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Confirm"
+
+[node name="Cancel" type="Button" parent="NewPackDialog/VBoxContainer/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/NewPack" to="NewPackDialog" method="_on_new_pack_pressed"]
+[connection signal="pressed" from="NewPackDialog/VBoxContainer/Buttons/Confirm" to="NewPackDialog" method="_on_confirm_pressed"]
