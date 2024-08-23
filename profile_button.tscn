@@ -94,19 +94,21 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Button" type="Button" parent="AddMods/TabContainer/Select"]
+[node name="SelectButton" type="Button" parent="AddMods/TabContainer/Select"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 text = "Select Files"
 
 [node name="FileDialog" type="FileDialog" parent="AddMods/TabContainer/Select"]
 title = "Open File(s)"
 ok_button_text = "Open"
 file_mode = 1
+access = 2
 use_native_dialog = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
@@ -116,3 +118,5 @@ use_native_dialog = true
 [connection signal="text_submitted" from="ChangeName/NewName" to="." method="_on_new_name_text_submitted"]
 [connection signal="close_requested" from="AddMods" to="AddMods" method="_on_close_requested"]
 [connection signal="files_dropped" from="AddMods" to="AddMods" method="_on_files_dropped"]
+[connection signal="pressed" from="AddMods/TabContainer/Select/SelectButton" to="AddMods" method="_on_select_button_pressed"]
+[connection signal="files_selected" from="AddMods/TabContainer/Select/FileDialog" to="AddMods" method="_on_file_dialog_files_selected"]
