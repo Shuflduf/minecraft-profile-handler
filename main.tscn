@@ -237,6 +237,7 @@ mouse_filter = 2
 title = "Settings"
 initial_position = 1
 size = Vector2i(320, 30)
+visible = false
 unresizable = true
 force_native = true
 script = ExtResource("4_8gqfh")

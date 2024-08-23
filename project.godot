@@ -20,3 +20,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://global.gd"
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
