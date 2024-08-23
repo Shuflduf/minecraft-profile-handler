@@ -53,6 +53,8 @@ func connect_profile(prof: Profile):
 		current_profile = prof
 		view_mods(Global.minecraft_dir + "/PROFILE " + prof.text)
 		)
+	prof.tree_exiting.connect(func():
+		_on_view_current_pressed())
 
 
 func view_mods(path: String):

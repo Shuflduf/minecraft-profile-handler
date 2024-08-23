@@ -67,10 +67,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 2
 tab_focus_mode = 0
 
 [node name="Drop" type="Control" parent="AddMods/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -111,6 +112,42 @@ file_mode = 1
 access = 2
 use_native_dialog = true
 
+[node name="Link" type="Control" parent="AddMods/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="AddMods/TabContainer/Link"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LinkLineEdit" type="LineEdit" parent="AddMods/TabContainer/Link/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+placeholder_text = "Link Here"
+alignment = 1
+expand_to_text_length = true
+
+[node name="LinkButton" type="Button" parent="AddMods/TabContainer/Link/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Download"
+
+[node name="LinkStatus" type="Label" parent="AddMods/TabContainer/Link/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Not Downloading"
+horizontal_alignment = 1
+
+[node name="HTTPRequest" type="HTTPRequest" parent="AddMods/TabContainer/Link"]
+unique_name_in_owner = true
+use_threads = true
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="index_pressed" from="RightClick" to="." method="_on_right_click_index_pressed"]
 [connection signal="mouse_exited" from="RightClick" to="." method="_on_right_click_mouse_exited"]
@@ -120,3 +157,5 @@ use_native_dialog = true
 [connection signal="files_dropped" from="AddMods" to="AddMods" method="_on_files_dropped"]
 [connection signal="pressed" from="AddMods/TabContainer/Select/SelectButton" to="AddMods" method="_on_select_button_pressed"]
 [connection signal="files_selected" from="AddMods/TabContainer/Select/FileDialog" to="AddMods" method="_on_file_dialog_files_selected"]
+[connection signal="pressed" from="AddMods/TabContainer/Link/VBoxContainer/LinkButton" to="AddMods" method="_on_link_button_pressed"]
+[connection signal="request_completed" from="AddMods/TabContainer/Link/HTTPRequest" to="AddMods" method="_on_http_request_request_completed"]

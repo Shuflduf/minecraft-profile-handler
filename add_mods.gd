@@ -23,3 +23,21 @@ func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
 		DirAccess.copy_absolute(i, \
 				get_parent().get_mods_path().strip_edges() + "/" + i.get_file())
 	get_parent().pressed.emit()
+
+
+func _on_link_button_pressed() -> void:
+	var url: String = %LinkLineEdit.text
+	if url.is_empty():
+		%LinkStatus.text = "Empty URL"
+		return
+	#elif !url.is_valid_filename():
+		#%LinkStatus.text = "Invalid URL"
+		#return
+	%LinkStatus.text = "Downloading..."
+	%HTTPRequest.request(%LinkLineEdit.text)
+	%HTTPRequest.download_file = get_parent().get_mods_path().strip_edges() + "/" + url.get_file()
+
+
+func _on_http_request_request_completed(_r, _r_code, _h, _b) -> void:
+	get_parent().pressed.emit.call_deferred()
+	%LinkStatus.text = "Download Finished"
