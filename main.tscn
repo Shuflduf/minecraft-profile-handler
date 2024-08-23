@@ -46,6 +46,7 @@ clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="Profiles" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
@@ -53,6 +54,15 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
 theme_override_constants/separation = 20
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="LoadPack" type="Button" parent="MarginContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 20
+text = "Load Current Pack"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -64,6 +74,7 @@ clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
 [node name="Mods" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2/ScrollContainer"]
 unique_name_in_owner = true
@@ -121,4 +132,5 @@ size_flags_horizontal = 3
 text = "Cancel"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/NewPack" to="NewPackDialog" method="_on_new_pack_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer3/LoadPack" to="." method="_on_load_pack_pressed"]
 [connection signal="pressed" from="NewPackDialog/VBoxContainer/Buttons/Confirm" to="NewPackDialog" method="_on_confirm_pressed"]
