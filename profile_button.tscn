@@ -38,6 +38,7 @@ title = "Edit Name"
 initial_position = 1
 size = Vector2i(425, 30)
 visible = false
+unresizable = true
 
 [node name="NewName" type="LineEdit" parent="ChangeName"]
 anchors_preset = 15

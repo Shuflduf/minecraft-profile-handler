@@ -16,8 +16,9 @@ func _ready() -> void:
 		%Profiles.add_child(new_button)
 		connect_profile(new_button)
 
-	current_profile = %Profiles.get_child(0)
-	%Profiles.get_child(0).selected = true
+	if %Profiles.get_child_count():
+		current_profile = %Profiles.get_child(0)
+		%Profiles.get_child(0).selected = true
 	_on_view_current_pressed()
 
 
