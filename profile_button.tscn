@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0drd5npyrnoi"]
+[gd_scene load_steps=4 format=3 uid="uid://c0drd5npyrnoi"]
 
 [ext_resource type="Script" path="res://profile_button.gd" id="1_5a1eg"]
+[ext_resource type="Script" path="res://add_mods.gd" id="2_fjf2d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfn4f"]
 bg_color = Color(0.201527, 0.201527, 0.201526, 1)
@@ -25,13 +26,15 @@ layout_mode = 2
 horizontal_alignment = 1
 
 [node name="RightClick" type="PopupMenu" parent="."]
-size = Vector2i(115, 89)
-item_count = 3
-item_0/text = "Open Folder"
-item_1/text = "Edit Name"
+size = Vector2i(115, 116)
+item_count = 4
+item_0/text = "Add Mods"
+item_1/text = "Open Folder"
 item_1/id = 1
-item_2/text = "Delete"
+item_2/text = "Edit Name"
 item_2/id = 2
+item_3/text = "Delete"
+item_3/id = 3
 
 [node name="ChangeName" type="Window" parent="."]
 title = "Edit Name"
@@ -39,6 +42,7 @@ initial_position = 1
 size = Vector2i(425, 30)
 visible = false
 unresizable = true
+force_native = true
 
 [node name="NewName" type="LineEdit" parent="ChangeName"]
 anchors_preset = 15
@@ -48,8 +52,67 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_to_text_length = true
 
+[node name="AddMods" type="Window" parent="."]
+title = "Add Mods"
+initial_position = 1
+size = Vector2i(440, 160)
+visible = false
+unresizable = true
+force_native = true
+script = ExtResource("2_fjf2d")
+
+[node name="TabContainer" type="TabContainer" parent="AddMods"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+tab_focus_mode = 0
+
+[node name="Drop" type="Control" parent="AddMods/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Label" type="Label" parent="AddMods/TabContainer/Drop"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -189.5
+offset_top = -11.5
+offset_right = 189.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Drag and drop files into this window to add them"
+
+[node name="Select" type="Control" parent="AddMods/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Button" type="Button" parent="AddMods/TabContainer/Select"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Select Files"
+
+[node name="FileDialog" type="FileDialog" parent="AddMods/TabContainer/Select"]
+title = "Open File(s)"
+ok_button_text = "Open"
+file_mode = 1
+use_native_dialog = true
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="index_pressed" from="RightClick" to="." method="_on_right_click_index_pressed"]
 [connection signal="mouse_exited" from="RightClick" to="." method="_on_right_click_mouse_exited"]
 [connection signal="close_requested" from="ChangeName" to="." method="_on_change_name_close_requested"]
 [connection signal="text_submitted" from="ChangeName/NewName" to="." method="_on_new_name_text_submitted"]
+[connection signal="close_requested" from="AddMods" to="AddMods" method="_on_close_requested"]
+[connection signal="files_dropped" from="AddMods" to="AddMods" method="_on_files_dropped"]

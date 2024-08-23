@@ -30,12 +30,14 @@ func _on_gui_input(event: InputEvent) -> void:
 func _on_right_click_index_pressed(index: int) -> void:
 	match index:
 		0:
+			$AddMods.show()
+		1:
 			var path = ProjectSettings.globalize_path(get_mods_path())
 			OS.shell_show_in_file_manager(path)
-		1:
+		2:
 			$ChangeName.show()
 			$ChangeName/NewName.text = name
-		2:
+		3:
 			OS.move_to_trash(get_mods_path())
 			queue_free()
 
