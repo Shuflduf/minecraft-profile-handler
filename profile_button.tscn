@@ -33,6 +33,22 @@ item_1/id = 1
 item_2/text = "Delete"
 item_2/id = 2
 
+[node name="ChangeName" type="Window" parent="."]
+title = "Edit Name"
+initial_position = 1
+size = Vector2i(425, 30)
+visible = false
+
+[node name="NewName" type="LineEdit" parent="ChangeName"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_to_text_length = true
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="index_pressed" from="RightClick" to="." method="_on_right_click_index_pressed"]
 [connection signal="mouse_exited" from="RightClick" to="." method="_on_right_click_mouse_exited"]
+[connection signal="close_requested" from="ChangeName" to="." method="_on_change_name_close_requested"]
+[connection signal="text_submitted" from="ChangeName/NewName" to="." method="_on_new_name_text_submitted"]

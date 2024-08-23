@@ -14,20 +14,31 @@ func _ready() -> void:
 		new_button.name = i.lstrip("PROFILE ")
 		new_button.text = new_button.name
 		%Profiles.add_child(new_button)
+		connect_profile(new_button)
+
 	current_profile = %Profiles.get_child(0)
 	%Profiles.get_child(0).selected = true
-	connect_buttons()
 	_on_view_current_pressed()
 
-func connect_buttons():
-	for i in %Profiles.get_children():
-		i.pressed.connect(func():
-			for j in %Profiles.get_children():
-				j.selected = false
-			i.selected = true
-			current_profile = i
-			view_mods(Global.minecraft_dir + "/PROFILE " + i.text)
-			)
+
+func add_profile(new_name: String):
+	var new_button = profile_scene.instantiate()
+	new_button.name = new_name
+	new_button.text = new_button.name
+	%Profiles.add_child(new_button)
+	connect_profile(new_button)
+
+
+
+func connect_profile(prof: Profile):
+
+	prof.pressed.connect(func():
+		for i in %Profiles.get_children():
+			i.selected = false
+		prof.selected = true
+		current_profile = prof
+		view_mods(Global.minecraft_dir + "/PROFILE " + prof.text)
+		)
 
 
 func view_mods(path: String):
