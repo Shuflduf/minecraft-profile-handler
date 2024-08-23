@@ -11,5 +11,13 @@ func _on_new_pack_pressed() -> void:
 func _on_confirm_pressed() -> void:
 	if %Name.text.is_empty():
 		return
-	DirAccess.make_dir_absolute("testingdir/" + "PROFILE " + %Name.text)
+	DirAccess.make_dir_absolute(Global.minecraft_dir + "/PROFILE " + %Name.text)
 	hide()
+
+
+func _on_close_requested() -> void:
+	hide()
+
+
+func _on_cancel_pressed() -> void:
+	_on_close_requested()

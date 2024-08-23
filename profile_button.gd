@@ -32,8 +32,8 @@ func _on_right_click_index_pressed(index: int) -> void:
 			var path = ProjectSettings.globalize_path(get_mods_path())
 			OS.shell_show_in_file_manager(path)
 
-func get_mods_path():
-	return "testingdir/" + "PROFILE " + text
+func get_mods_path() -> String:
+	return Global.minecraft_dir + "/PROFILE " + text
 
 
 func _on_right_click_mouse_exited() -> void:
