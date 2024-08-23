@@ -11,4 +11,5 @@ func _on_new_pack_pressed() -> void:
 func _on_confirm_pressed() -> void:
 	if %Name.text.is_empty():
 		return
-	DirAccess.make_dir_absolute("testingdir/" + %Name.text)
+	DirAccess.make_dir_absolute("testingdir/" + "PROFILE " + %Name.text)
+	hide()
